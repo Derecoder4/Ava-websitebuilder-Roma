@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 
 const AnimatedBackground: React.FC = () => {
   return (
-    <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-70">
+    <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-40 dark:opacity-70 transition-opacity duration-300">
       <motion.div
         className="absolute top-[10%] left-[10%] w-[400px] h-[400px] bg-pink-500/10 rounded-full filter blur-3xl"
         animate={{

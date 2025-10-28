@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -31,7 +30,7 @@ const TooltipButton: React.FC<TooltipButtonProps> = ({ children }) => {
       <motion.button
         whileHover={{ scale: 1.1, y: -2 }}
         whileTap={{ scale: 0.95 }}
-        className="glass-panel text-sm px-4 py-2 rounded-lg hover:border-pink-500/50 transition-colors duration-300"
+        className="bg-white/60 dark:bg-white/5 backdrop-blur-lg border border-gray-200/80 dark:border-white/10 text-sm px-4 py-2 rounded-lg hover:border-pink-500/50 transition-colors duration-300"
       >
         {children}
       </motion.button>

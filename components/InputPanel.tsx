@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CustomizationState } from '../App';
@@ -8,10 +7,12 @@ interface InputPanelProps {
   isLoading: boolean;
   customization: CustomizationState;
   setCustomization: React.Dispatch<React.SetStateAction<CustomizationState>>;
+  vibe: string;
+  setVibe: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const loadingMessages = [
-  "Ava is dreaming your vibe...",
+  "Ava is weaving your vibe...",
   "Compiling aesthetics...",
   "Visualizing concepts...",
   "Rendering pixels with soul...",
@@ -46,7 +47,7 @@ const LoadingSpinner: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
           transition={{ duration: 0.4 }}
-          className="text-gray-300 text-sm"
+          className="text-gray-600 dark:text-gray-300 text-sm"
         >
           {loadingMessages[messageIndex]}
         </motion.p>
@@ -57,7 +58,7 @@ const LoadingSpinner: React.FC = () => {
 
 const CustomizationControl: React.FC<{ title: string, children: React.ReactNode }> = ({ title, children }) => (
   <div>
-    <label className="block text-sm font-medium text-gray-400 mb-2">{title}</label>
+    <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{title}</label>
     {children}
   </div>
 );
@@ -69,7 +70,7 @@ const ToggleButtonGroup: React.FC<{ options: string[], selected: string, onChang
                 key={option}
                 onClick={() => onChange(option)}
                 className={`px-3 py-1 text-sm rounded-md transition-all duration-200 capitalize w-full
-                    ${selected === option ? 'bg-pink-500/80 text-white button-glow' : 'bg-white/10 hover:bg-white/20'}`}
+                    ${selected === option ? 'bg-pink-500/90 text-white button-shadow-light dark:button-glow' : 'bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20'}`}
             >
                 {option}
             </button>
@@ -78,11 +79,10 @@ const ToggleButtonGroup: React.FC<{ options: string[], selected: string, onChang
 );
 
 
-const InputPanel: React.FC<InputPanelProps> = ({ onGenerate, isLoading, customization, setCustomization }) => {
-  const [vibe, setVibe] = useState('');
+const InputPanel: React.FC<InputPanelProps> = ({ onGenerate, isLoading, customization, setCustomization, vibe, setVibe }) => {
 
   return (
-    <div className="glass-panel rounded-xl p-6 min-h-[450px] flex flex-col justify-between">
+    <div className="bg-white/60 dark:bg-white/5 backdrop-blur-lg border border-gray-200/80 dark:border-white/10 rounded-xl p-6 min-h-[450px] flex flex-col justify-between transition-colors duration-300">
       <AnimatePresence mode="wait">
         {isLoading ? (
           <motion.div
@@ -107,11 +107,11 @@ const InputPanel: React.FC<InputPanelProps> = ({ onGenerate, isLoading, customiz
             <textarea
               value={vibe}
               onChange={(e) => setVibe(e.target.value)}
-              placeholder="Type your vibe… e.g., ‘A Sentient-inspired dashboard with floating AI orbs and pink energy waves.’"
-              className="w-full flex-grow bg-transparent border-0 text-gray-200 placeholder-gray-500 focus:ring-0 resize-none outline-none p-2 text-base"
+              placeholder="Type your vibe… e.g., ‘An ethereal dreamscape with floating crystals and neon auroras.’"
+              className="w-full flex-grow bg-transparent border-0 text-gray-900 dark:text-gray-200 placeholder-gray-500 focus:ring-0 resize-none outline-none p-2 text-base"
             />
             
-            <div className="mt-4 border-t border-white/10 pt-4 space-y-4">
+            <div className="mt-4 border-t border-black/10 dark:border-white/10 pt-4 space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <CustomizationControl title="Animation Speed">
                     <ToggleButtonGroup
@@ -132,8 +132,8 @@ const InputPanel: React.FC<InputPanelProps> = ({ onGenerate, isLoading, customiz
              <div className="mt-6">
                 <button
                     onClick={onGenerate}
-                    className="w-full bg-pink-500/90 hover:bg-pink-500 text-white font-bold py-3 px-4 rounded-lg button-glow transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-                    disabled={isLoading}
+                    className="w-full bg-pink-500/90 hover:bg-pink-500 text-white font-bold py-3 px-4 rounded-lg button-shadow-light dark:button-glow transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={isLoading || !vibe.trim()}
                 >
                     Generate with Ava
                 </button>
